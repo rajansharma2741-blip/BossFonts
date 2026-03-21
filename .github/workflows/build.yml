@@ -16,8 +16,10 @@ jobs:
         with:
           channel: 'stable'
           
-      - name: Install dependencies
-        run: flutter pub get
+      - name: Fix Project Structure
+        run: |
+          flutter create . --force
+          flutter pub get
         
       - name: Build APK
         run: flutter build apk --release
