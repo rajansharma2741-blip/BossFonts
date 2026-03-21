@@ -83,10 +83,4 @@ class _BossFontsState extends State<BossFonts> {
                   ),
                 );
               },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+            )
