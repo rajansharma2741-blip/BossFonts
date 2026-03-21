@@ -11,24 +11,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      # Checkout code
+      - uses: actions/checkout@v4
 
+      # Setup Flutter
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
 
-      # 🔥 YE IMPORTANT STEP ADD KARO
+      # Fix project structure (IMPORTANT)
       - name: Fix Project Structure
         run: flutter create .
 
+      # Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
+      # Build APK
       - name: Build APK
         run: flutter build apk --release
 
+      # Upload APK
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Boss-VIP-APK
           path: build/app/outputs/flutter-apk/app-release.apk
