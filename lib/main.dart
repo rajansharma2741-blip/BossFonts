@@ -11,8 +11,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: BossFonts(),
       debugShowCheckedModeBanner: false,
+      home: BossFonts(),
     );
   }
 }
@@ -29,7 +29,7 @@ class _BossFontsState extends State<BossFonts> {
   final TextEditingController controller = TextEditingController();
 
   List<String> generateAllStyles(String t) {
-    if (t.isEmpty) return ["Naam likhein Boss!"];
+    if (t.trim().isEmpty) return ["Naam likhein Boss!"];
 
     String spaced = t.split('').join(' ');
     String dashed = t.split('').join('-');
@@ -56,59 +56,92 @@ class _BossFontsState extends State<BossFonts> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> allStyles = generateAllStyles(input);
+    final allStyles = generateAllStyles(input);
 
     return Scaffold(
       backgroundColor: Colors.black,
+
       appBar: AppBar(
         title: const Text("VIP MUSIC & FONT BOSS"),
         backgroundColor: Colors.deepPurple,
         centerTitle: true,
       ),
+
       body: Column(
         children: [
+
+          // 🔤 Input Box
           Padding(
             padding: const EdgeInsets.all(15),
             child: TextField(
               controller: controller,
               style: const TextStyle(color: Colors.white),
+
               decoration: const InputDecoration(
                 hintText: "Yahan naam likhein...",
                 hintStyle: TextStyle(color: Colors.grey),
                 labelText: "Magic Name Box",
                 labelStyle: TextStyle(color: Colors.cyanAccent),
+
                 enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.cyanAccent)),
+                  borderSide: BorderSide(color: Colors.cyanAccent),
+                ),
+
                 focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white)),
+                  borderSide: BorderSide(color: Colors.white),
+                ),
               ),
-              onChanged: (val) => setState(() => input = val),
+
+              onChanged: (val) {
+                setState(() {
+                  input = val;
+                });
+              },
             ),
           ),
+
+          // 📜 List
           Expanded(
             child: ListView.builder(
               itemCount: allStyles.length,
+
               itemBuilder: (context, index) {
                 return Card(
                   color: Colors.grey[900],
-                  margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 5,
+                  ),
+
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
-                    side: const BorderSide(color: Colors.deepPurple, width: 0.5),
+                    side: const BorderSide(
+                      color: Colors.deepPurple,
+                      width: 0.5,
+                    ),
                   ),
+
                   child: ListTile(
                     title: Text(
                       allStyles[index],
                       style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    trailing:
-                        const Icon(Icons.copy, color: Colors.cyanAccent),
+
+                    trailing: const Icon(
+                      Icons.copy,
+                      color: Colors.cyanAccent,
+                    ),
+
                     onTap: () {
                       Clipboard.setData(
-                          ClipboardData(text: allStyles[index]));
+                        ClipboardData(text: allStyles[index]),
+                      );
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           backgroundColor: Colors.cyanAccent,
